@@ -63,7 +63,7 @@ app.post("/sendMessage", function (req, res) {
     req.end();
 });
 
-const PORT = 80 || process.env.PORT;
+const PORT = process.env.PORT;
 
 app.listen(PORT, function () {
     console.log("Node.js is listening to PORT:" + PORT);
