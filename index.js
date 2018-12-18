@@ -3,9 +3,6 @@ const bodyParser = require('body-parser');
 const https = require('https');
 require('dotenv').config();
 
-//express系のSetting
-var app = express();
-app.use(bodyParser.json());
 
 // CORSを許可する
 app.use(function(req, res, next) {
@@ -13,6 +10,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+//express系のSetting
+var app = express();
+app.use(bodyParser.json());
+
+
 
 
 app.get("/", function (req, res) {
