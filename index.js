@@ -57,6 +57,7 @@ app.post("/sendMessage", function (req, res) {
     req.write(senddata);
     //終わり
     req.end();
+    res.send(200);
 });
 
 const PORT = process.env.PORT;
