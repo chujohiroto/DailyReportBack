@@ -15,9 +15,6 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 
-
-
-
 app.get("/", function (req, res) {
     res.send("Root");
 });
@@ -29,8 +26,7 @@ app.post("/sendMessage", function (req, res) {
     const todo = req.body.todo;
     const trouble = req.body.trouble;
     var message = date + "\n" + member + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble
-    var senddata = JSON.stringify({"username":member,"text": message,"icon_emoji":":ghost:"});
-
+    var senddata = JSON.stringify({"file":date ,"username":member,"text": message,"icon_emoji":":ghost:"});
     var options = {
         hostname: 'hooks.slack.com',
         port: 443,
