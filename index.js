@@ -29,15 +29,10 @@ app.post("/sendMessage", function (req, res) {
     var senddata = JSON.stringify(
         {
         "username":member,
-        "text": member,
+        "title": "Daily Report:" + date,
+        "title_link": "https://irossoftware.github.io/DailyReportFront/",        
+        "text": message,
         "icon_emoji":":ghost:",
-        "attachments": [
-        {
-            "title": "Daily Report:" + date,
-            "title_link": "https://irossoftware.github.io/DailyReportFront/",
-            "text": message,
-        },
-    ]
         });
     var options = {
         hostname: 'hooks.slack.com',
