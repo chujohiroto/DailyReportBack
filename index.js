@@ -1,9 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const https = require('https');
+require('dotenv').config();
+var fs = require('fs');
+var options = {
+  key:  fs.readFileSync(process.env.CERTKEY),
+  cert: fs.readFileSync(process.env.SSLKEY)
+};
 
 //express系のSetting
 var app = express();
+var server = https.createServer(options,app);
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
@@ -15,8 +22,6 @@ app.use(function (req, res, next) {
 app.get("/", function (req, res) {
     res.send("Root");
 });
-
-
 
 app.post("/sendMessage", function (req, res) {
     const member = req.body.member;
@@ -61,6 +66,4 @@ app.post("/sendMessage", function (req, res) {
 
 const PORT = 80;
 
-app.listen(PORT, function () {
-    console.log("Node.js is listening to PORT:" + PORT);
-});
+server.listen(PORT);
