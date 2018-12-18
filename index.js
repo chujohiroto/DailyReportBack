@@ -4,8 +4,8 @@ const https = require('https');
 require('dotenv').config();
 var fs = require('fs');
 var options = {
-  key:  fs.readFileSync(process.env.CERTKEY),
-  cert: fs.readFileSync(process.env.SSLKEY)
+  key:  fs.readFileSync(process.env.SSLKEY),
+  cert: fs.readFileSync(process.env.CERTKEY)
 };
 
 //express系のSetting
