@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const https = require('https');
 require('dotenv').config();
 
+//express系のSetting
+var app = express();
 
 // CORSを許可する
 app.use(function(req, res, next) {
@@ -11,8 +13,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-//express系のSetting
-var app = express();
 app.use(bodyParser.json());
 
 
