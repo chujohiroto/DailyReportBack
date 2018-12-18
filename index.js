@@ -25,7 +25,7 @@ app.post("/sendMessage", function (req, res) {
     const done = req.body.done;
     const todo = req.body.todo;
     const trouble = req.body.trouble;
-    var message = "<https://irossoftware.github.io/DailyReportFront/|" +"Daily Report:" + date + ">" + "\n```\n" + date + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble + "\n```"
+    var message = member + "\n<https://irossoftware.github.io/DailyReportFront/|" + date + ">" + "\n```\n" + date + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble + "\n```"
     var senddata = JSON.stringify(
         {
         "username":member,
