@@ -26,7 +26,19 @@ app.post("/sendMessage", function (req, res) {
     const todo = req.body.todo;
     const trouble = req.body.trouble;
     var message = date + "\n" + member + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble
-    var senddata = JSON.stringify({"file":date ,"username":member,"text": message,"icon_emoji":":ghost:"});
+    var senddata = JSON.stringify(
+        {"file":date ,
+        "username":member,
+        "text": message,
+        "icon_emoji":":ghost:",
+        "attachments": [
+        {
+            "title": "Daily Report:" + date,
+            "title_link": "https://irossoftware.github.io/DailyReportFront/",
+            "text": message,
+        },
+    ]
+        });
     var options = {
         hostname: 'hooks.slack.com',
         port: 443,
