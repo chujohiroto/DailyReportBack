@@ -25,11 +25,11 @@ app.post("/sendMessage", function (req, res) {
     const done = req.body.done;
     const todo = req.body.todo;
     const trouble = req.body.trouble;
-    var message = date + "\n" + member + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble
+    var message = date + "\n#やったこと\n" + done + "\n#やること\n" + todo + "\n#困ったこと\n" + trouble
     var senddata = JSON.stringify(
-        {"file":date ,
+        {
         "username":member,
-        "text": message,
+        "text": member,
         "icon_emoji":":ghost:",
         "attachments": [
         {
