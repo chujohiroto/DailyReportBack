@@ -14,8 +14,11 @@ db.serialize(function() {
 //express系のSetting
 var app = express();
 
-var cors = require('cors');
-app.use(cors());
+app.use((_,response,next)=>
+{
+    response.header("Access-Control-Allow-Origin", "*");
+    next();
+});
 
 app.use(bodyParser.json());
 
