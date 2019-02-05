@@ -63,7 +63,20 @@ app.post("/saveMessage", function (req, res) {
 
 function sendMessage(member,date,done,todo,trouble)
 {
-    var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date + "\n\n#やったこと\n" + done + "\n\n#やること\n" + todo + "\n\n#困ったこと\n" + trouble + "\n```"
+    var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date;
+    
+    if(done != undefined || done != "undefined"){
+        message += "\n\n#やったこと\n" + done;
+    }
+    if(todo != undefined || todo != "undefined"){
+        message += "\n\n#やること\n" + todo;
+    }
+    if(trouble != undefined || trouble != "undefined"){
+        message += "\n\n#困ったこと\n" + trouble;
+    }
+    
+    message += "\n```";
+
     var senddata = JSON.stringify(
         {
         "username":member,
