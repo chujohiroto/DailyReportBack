@@ -2,6 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const https = require('https');
 require('dotenv').config();
+const schedule = require("node-schedule");
+const sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('test.sqlite');
+
+db.serialize(function() {
+  // テーブルがなければ作成
+  db.run('CREATE TABLE IF NOT EXISTS DATA(member TEXT,date TEXT, done TEXT, todo TEXT, trouble TEXT)');
+});
 
 //express系のSetting
 var app = express();
@@ -16,7 +24,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
-    res.send("Root");
+    res.send("Welcome to DailyReport API");
 });
 
 app.post("/sendMessage", function (req, res) {
@@ -25,7 +33,38 @@ app.post("/sendMessage", function (req, res) {
     const done = req.body.done;
     const todo = req.body.todo;
     const trouble = req.body.trouble;
-    var message = member + "\n<https://irossoftware.github.io/DailyReportFront/|" + date + ">" + "\n```\n" + date + "\n\n#やったこと\n" + done + "\n\n#やること\n" + todo + "\n\n#困ったこと\n" + trouble + "\n```"
+
+    sendMessage(member,date,done,todo,trouble);
+});
+
+app.post("/saveMessage", function (req, res) {
+    const member = req.body.member;
+    const date = req.body.date;
+    const done = req.body.done;
+    const todo = req.body.todo;
+    const trouble = req.body.trouble;
+
+    if(member == "None"){
+        res.send(505)
+    }
+    
+    console.log("Save Message " + member + date);
+
+    db.serialize(() => {  
+        var stmt = db.prepare('DELETE FROM DATA where member == ?');
+        stmt.run([member]);
+        stmt.finalize();
+
+        var stmt = db.prepare('INSERT INTO DATA VALUES (?,?,?,?,?)');
+        stmt.run([member,date,done,todo,trouble]);
+        stmt.finalize();
+    });
+    res.send(200)
+});
+
+function sendMessage(member,date,done,todo,trouble)
+{
+    var message = member + "\n<https://irossoftware.github.io/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date + "\n\n#やったこと\n" + done + "\n\n#やること\n" + todo + "\n\n#困ったこと\n" + trouble + "\n```"
     var senddata = JSON.stringify(
         {
         "username":member,
@@ -61,11 +100,36 @@ app.post("/sendMessage", function (req, res) {
     req.write(senddata);
     //終わり
     req.end();
-    res.send(200);
-});
+}
 
 const PORT = process.env.PORT;
 
 app.listen(PORT, function () {
     console.log("Node.js is listening to PORT:" + PORT);
+});
+
+var dailyjob = schedule.scheduleJob({hour : 8 ,minute : 0
+}, function () {
+db.serialize(() => {
+  db.each('SELECT * FROM DATA', (error, row) => {
+    if(error) {
+      console.error('Error!', error);
+      return;
+    }    
+    sendMessage(row.member,row.date ,row.done ,row.todo, row.trouble);
+        var stmt = db.prepare('DELETE FROM DATA where member == ?');
+        stmt.run([row.member]);
+        stmt.finalize();
+  });
+});
+});
+
+dailyjob.on("scheduled", function () {
+  console.log(this.name + "の予定が登録されました");
+});
+dailyjob.on("run", function () {
+  console.log(this.name + "の予定が実行されました");
+});
+dailyjob.on("canceled", function () {
+  console.log(this.name + "の予定がキャンセルされました");
 });
