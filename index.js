@@ -63,7 +63,13 @@ app.post("/saveMessage", function (req, res) {
 
 function sendMessage(member,date,done,todo,trouble)
 {
+    console.log("-----------------------")
+    console.log(member);
     console.log(date);
+    console.log(done);
+    console.log(todo);
+    console.log(trouble);
+
     var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date;
     
     if(done != undefined || done != "undefined" || done != ""){
