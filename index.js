@@ -14,12 +14,8 @@ db.serialize(function() {
 //express系のSetting
 var app = express();
 
-var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  next();
-}
-app.use(allowCrossDomain);
+var cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 
