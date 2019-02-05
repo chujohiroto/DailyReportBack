@@ -63,7 +63,7 @@ app.post("/saveMessage", function (req, res) {
 
 function sendMessage(member,date,done,todo,trouble)
 {
-    var message = member + "\n<https://irossoftware.github.io/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date + "\n\n#やったこと\n" + done + "\n\n#やること\n" + todo + "\n\n#困ったこと\n" + trouble + "\n```"
+    var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date + "\n\n#やったこと\n" + done + "\n\n#やること\n" + todo + "\n\n#困ったこと\n" + trouble + "\n```"
     var senddata = JSON.stringify(
         {
         "username":member,
