@@ -14,12 +14,12 @@ db.serialize(function() {
 //express系のSetting
 var app = express();
 
-// CORSを許可する
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   next();
-});
+}
+app.use(allowCrossDomain);
 
 app.use(bodyParser.json());
 
