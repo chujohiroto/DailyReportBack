@@ -65,13 +65,13 @@ function sendMessage(member,date,done,todo,trouble)
 {
     var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date;
     
-    if(done != undefined || done != "undefined"){
+    if(done != undefined || done != "undefined" || done != ""){
         message += "\n\n#やったこと\n" + done;
     }
-    if(todo != undefined || todo != "undefined"){
+    if(todo != undefined || todo != "undefined" || done != ""){
         message += "\n\n#やること\n" + todo;
     }
-    if(trouble != undefined || trouble != "undefined"){
+    if(trouble != undefined || trouble != "undefined" || done != ""){
         message += "\n\n#困ったこと\n" + trouble;
     }
     
