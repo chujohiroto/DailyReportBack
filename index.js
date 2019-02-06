@@ -131,7 +131,7 @@ app.listen(PORT, function () {
     console.log("Node.js is listening to PORT:" + PORT);
 });
 
-var dailyjob = schedule.scheduleJob({hour : 8 ,minute : 0
+var dailyjob = schedule.scheduleJob({hour : 0 ,minute : 0
 }, function () {
 db.serialize(() => {
   db.each('SELECT * FROM DATA', (error, row) => {
