@@ -34,6 +34,9 @@ app.post("/sendMessage", function (req, res) {
     const trouble = req.body.trouble;
 
     sendMessage(member,date,done,todo,trouble);
+    var stmt = db.prepare('DELETE FROM DATA where member == ?');
+        stmt.run([member]);
+        stmt.finalize();
 });
 
 app.post("/saveMessage", function (req, res) {
@@ -72,13 +75,13 @@ function sendMessage(member,date,done,todo,trouble)
 
     var message = member + "\n<https://tea-app.jp/DailyReportFront/?date=" + date + "|" + date + ">" + "\n```\n" + date;
     
-    if(done !== undefined || done !== "undefined" || done != ""){
+    if(done !== undefined || done !== "undefined" || done != ""　|| done != null){
         message += "\n\n#やったこと\n" + done;
     }
-    if(todo !== undefined || todo !== "undefined" || done != ""){
+    if(todo !== undefined || todo !== "undefined" || todo != ""|| todo != null){
         message += "\n\n#やること\n" + todo;
     }
-    if(trouble !== undefined || trouble !== "undefined" || done != ""){
+    if(trouble !== undefined || trouble !== "undefined" || trouble != ""|| trouble != null){
         message += "\n\n#困ったこと\n" + trouble;
     }
     
